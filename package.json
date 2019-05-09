@@ -17,7 +17,7 @@
     "swagger": "^0.7.5"
   },
   "scripts": {
-    "start": "./node_modules/.bin/swagger project start",
+    "start": "node app.js",
     "edit": "./node_modules/.bin/swagger project edit",
     "mock": "./node_modules/.bin/swagger project start -m",
     "test": "./node_modules/.bin/swagger project test"
