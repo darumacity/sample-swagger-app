@@ -60,6 +60,13 @@ paths:
     post:
       description: Insert a invoice
       operationId: post
+      parameters:
+        - name: body
+          in: body
+          description: Date of the invoice
+          required: true
+          schema:
+            $ref: "#/definitions/InvoiceRequest"
       responses:
         "200":
           description: Success
@@ -100,6 +107,12 @@ paths:
           description: ID of the invoice
           required: true
           type: integer
+        - name: body
+          in: body
+          description: Date of the invoice
+          required: true
+          schema:
+            $ref: "#/definitions/InvoiceRequest"
       responses:
         "200":
           description: Success
@@ -136,15 +149,24 @@ definitions:
     properties:
       message:
         type: string
+  InvoiceRequest:
+    required:
+      - invoiceDate
+    properties:
+      invoiceDate:
+        type: string
   InvoiceResponse:
     required:
       - invoiceId
+      - invoiceDate
       - amountWithoutTax
       - taxAmount
       - amountIncludingTax
     properties:
       invoiceId:
         type: integer
+      invoiceDate:
+        type: string
       amountWithoutTax:
         type: integer
       taxAmount:
