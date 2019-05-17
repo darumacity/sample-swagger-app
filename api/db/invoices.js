@@ -2,8 +2,10 @@
 
 const BaseEntity = require('./baseEntity');
 
-module.exports = class extends BaseEntity {
+class Entity extends BaseEntity {
   constructor(context) {
     super(context, 'invoices', 'invoiceId');
   }
 }
+
+module.exports = (context) => {return new Entity(context);}

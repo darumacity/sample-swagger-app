@@ -15,8 +15,5 @@ module.exports = class {
     });
   }
 
-  get invoices() {
-    var Invoices = require('./invoices');
-    return new Invoices(this.context);
-  }
+  get invoices() { return require('./invoices')(this.context); }
 }
