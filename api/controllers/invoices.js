@@ -2,46 +2,46 @@
 
 const Db = require('../db');
 
-module.exports.list = (req, res) => (async () => {
+module.exports.getInvoices = (req, res) => (async () => {
   const db = new Db();
   var [results] = await db.invoices.get();
 
   res.json(results);
 })();
 
-module.exports.get = (req, res) => (async () => {
-  var id = req.swagger.params.id.value;
+module.exports.getInvoice = (req, res) => (async () => {
+  var invoiceId = req.swagger.params.invoiceId.value;
 
   const db = new Db();
-  var [results] = await db.invoices.get(id);
+  var [results] = await db.invoices.get({ invoiceId });
 
   res.json(results[0]);
 })();
 
-module.exports.post = (req, res) => (async () => {
+module.exports.insertInvoice = (req, res) => (async () => {
   var body = req.swagger.params.body.value;
-  
+
   const db = new Db();
   var [results] = await db.invoices.insert(body);
 
   res.json(results[0]);
 })();
 
-module.exports.put = (req, res) => (async () => {
-  var id = req.swagger.params.id.value;
+module.exports.updateInvoice = (req, res) => (async () => {
+  var invoiceId = req.swagger.params.invoiceId.value;
   var body = req.swagger.params.body.value;
 
   const db = new Db();
-  var [results] = await db.invoices.update(id, body);
+  var [results] = await db.invoices.update({ invoiceId }, body);
 
   res.json(results[0]);
 })();
 
-module.exports.delete = (req, res) => (async () => {
-  var id = req.swagger.params.id.value;
+module.exports.deleteInvoice = (req, res) => (async () => {
+  var invoiceId = req.swagger.params.invoiceId.value;
 
   const db = new Db();
-  await db.invoices.delete(id);
+  await db.invoices.delete({ invoiceId });
 
   res.json();
 })();

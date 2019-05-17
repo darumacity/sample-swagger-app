@@ -16,4 +16,5 @@ module.exports = class {
   }
 
   get invoices() { return require('./invoices')(this.context); }
+  get invoiceDetails() { return require('./invoiceDetails')(this.context); }
 }

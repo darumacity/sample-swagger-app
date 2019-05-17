@@ -4,7 +4,7 @@ const BaseEntity = require('./baseEntity');
 
 class Entity extends BaseEntity {
   constructor(context) {
-    super(context, 'invoices', 'invoiceId');
+    super(context, 'invoices');
   }
 }
 

@@ -1,17 +1,16 @@
 'use strict';
 
 module.exports = class {
-  constructor(context, tableName, primaryKeyName) {
+  constructor(context, tableName) {
     this.context = context;
     this.tableName = tableName;
-    this.primaryKeyName = primaryKeyName;
   }
 
-  get(id) {
-    var where = id !== undefined ? `where "${this.primaryKeyName}" = ${id}` : '';
+  get(conditions = {}) {
+    const joinedConditions = Object.keys(conditions).map(key => `and "${key}"='${conditions[key]}'`).join(' ');
 
     return this.context
-      .query(`select * from ${this.tableName} ${where}`)
+      .query(`select * from ${this.tableName} where 1=1 ${joinedConditions}`)
       .then(([results, metadata]) => [results, metadata]);
   }
 
@@ -24,17 +23,20 @@ module.exports = class {
       .then(result => result);
   }
 
-  update(id, values) {
+  update(conditions, values) {
+    const joinedConditions = Object.keys(conditions).map(key => `and "${key}"='${conditions[key]}'`).join(' ');
     const joinedValues = Object.keys(values).map(key => `"${key}"='${values[key]}'`).join(",");
 
     return this.context
-      .query(`update ${this.tableName} set ${joinedValues} where "${this.primaryKeyName}" = ${id} returning *`)
+      .query(`update ${this.tableName} set ${joinedValues} where 1=1 ${joinedConditions} returning *`)
       .then(result => result);
   }
 
-  delete(id) {
+  delete(conditions) {
+    const joinedConditions = Object.keys(conditions).map(key => `and "${key}"='${conditions[key]}'`).join(' ');
+
     return this.context
-      .query(`delete from ${this.tableName} where "${this.primaryKeyName}" = ${id}`)
+      .query(`delete from ${this.tableName} where 1=1 ${joinedConditions}`)
       .then(result => result);
   }
 }
