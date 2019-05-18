@@ -28,8 +28,9 @@ module.exports.insertInvoiceDetail = (req, res) => (async () => {
   body.invoiceId = invoiceId;
 
   const db = new Db();
-  body.detailId = await db.invoiceDetails.getMaxDetailId(invoiceId) + 1;
   var [results] = await db.invoiceDetails.insert(body);
+
+  await db.invoices.update({ invoiceId }, await db.invoiceDetails.recalc(invoiceId));
 
   res.json(results[0]);
 })();
